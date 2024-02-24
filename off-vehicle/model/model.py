@@ -115,7 +115,7 @@ def prepare_base_model(url, initial_epochs, fine_tune_epochs, dataset_path=None)
 
   # Save model to build directory
   model.save('off-vehicle/build/model.keras')
-  model.save('off-vehicle/build/model/', save_format='tf')
+  model.export('off-vehicle/build/model/')
   
   # Print metrics
   print(f"Model took {(end_time - begin_time):.2f}s to train")
