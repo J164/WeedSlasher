@@ -3,7 +3,7 @@ import tensorflow as tf
 import time
 import os
 
-def prepare_base_model(url, initial_epochs, fine_tune_epochs):
+def prepare_base_model(url, initial_epochs, fine_tune_epochs, dataset_path=None):
   # Find the training and validation datasets
   path_to_zip = tf.keras.utils.get_file('base_dataset.zip', origin=url, extract=True)
   PATH = os.path.join(os.path.dirname(path_to_zip), 'base_dataset')
@@ -78,6 +78,21 @@ def prepare_base_model(url, initial_epochs, fine_tune_epochs):
   mid_loss, mid_accuracy = model.evaluate(test_dataset)
 
   # Fine tune model
+
+  # Fetch supplemental data
+  additional_dataset = tf.keras.utils.image_dataset_from_directory(dataset_path, shuffle=True, batch_size=1, image_size=IMG_SIZE)
+  train, validate = tf.keras.utils.split_dataset(additional_dataset, left_size=0.6)
+  test, validate = tf.keras.utils.split_dataset(additional_dataset, left_size=0.5)
+
+  train_dataset = train_dataset.concatenate(train)
+  validation_dataset = validation_dataset.concatenate(validate)
+  test_dataset = test_dataset.concatenate(test)
+
+  # Prefetch datasets
+  train_dataset = train_dataset.prefetch(buffer_size=AUTOTUNE)
+  validation_dataset = validation_dataset.prefetch(buffer_size=AUTOTUNE)
+  test_dataset = test_dataset.prefetch(buffer_size=AUTOTUNE)
+
   base_model.trainable = True
 
   fine_tune_at = 100
@@ -99,7 +114,8 @@ def prepare_base_model(url, initial_epochs, fine_tune_epochs):
   end_loss, end_accuracy = model.evaluate(test_dataset)
 
   # Save model to build directory
-  model.save('off-vehicle/build/base_model.keras')
+  model.save('off-vehicle/build/model.keras')
+  model.save('off-vehicle/build/model/', save_format='tf')
   
   # Print metrics
   print(f"Model took {(end_time - begin_time):.2f}s to train")
@@ -113,8 +129,8 @@ def prepare_base_model(url, initial_epochs, fine_tune_epochs):
   print("end loss: {:.2f}".format(end_loss))
   print("end accuracy: {:.2f}".format(end_accuracy))
 
-  plt.figure(figsize=(8, 8))
-  plt.subplot(2, 1, 1)
+  plt.figure(figsize=(16, 16))
+  plt.subplot(2, 2, 1)
   plt.plot(acc, label='Training Accuracy')
   plt.plot(val_acc, label='Validation Accuracy')
   plt.ylim([0, 1.0])
@@ -123,7 +139,7 @@ def prepare_base_model(url, initial_epochs, fine_tune_epochs):
   plt.legend(loc='lower right')
   plt.title('Training and Validation Accuracy')
 
-  plt.subplot(2, 1, 2)
+  plt.subplot(2, 2, 3)
   plt.plot(loss, label='Training Loss')
   plt.plot(val_loss, label='Validation Loss')
   plt.ylim([0, 1.0])
@@ -132,7 +148,21 @@ def prepare_base_model(url, initial_epochs, fine_tune_epochs):
   plt.legend(loc='upper right')
   plt.title('Training and Validation Loss')
   plt.xlabel('epoch')
+
+  plt.subplot(2, 2, 2)
+  plt.bar(['initial', 'after general training', 'after fine tuning'], [init_accuracy, mid_accuracy, end_accuracy])
+  plt.ylim([0, 1.0])
+  plt.title('Testing Accuracy')
+  plt.xlabel('training stage')
+
+  plt.subplot(2, 2, 4)
+  plt.bar(['initial', 'after general training', 'after fine tuning'], [init_loss, mid_loss, end_loss])
+  plt.ylim([0, 1.0])
+  plt.title('Testing Loss')
+  plt.xlabel('training stage')
+
   plt.show()
 
 url = 'https://www.dropbox.com/scl/fi/etvihp98kjka3sqwnygg4/base_dataset.zip?rlkey=gx5e2q464a29jk5s7tpy2o1o7&dl=1'
-prepare_base_model(url, 10, 5)
+path = 'off-vehicle/build/regions/0'
+prepare_base_model(url, 10, 10, dataset_path=path)
