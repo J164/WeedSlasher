@@ -3,15 +3,15 @@ from src import distance_sensor as distance_sensor_module
 from typing import List
 import time
 import numpy as np
-
+import script from test
 isStopped = False
 
 distance_sensor1 = distance_sensor_module.DistanceSensor({
-    "pins": {
-        "echo": 23,
-        "trigger": 24
-    }
-})
+        "pins": {
+            "echo": 23,
+            "trigger": 24
+        }
+    })
 
 if __name__ == '__main__':
 
@@ -78,11 +78,16 @@ if __name__ == '__main__':
                      [1,0,0,0,0]
 
     ])
+
+    def swerve():
+        turn90right()
+        
+
     def navigate(array):
         for i in range (array[0].size):
-            forwardN(len(array))
-            if (isStopped == True):
-                return
+        
+            if (forwardN(len(array))):
+                break
 
             if (i%2 == 0):
                 turn90right()
@@ -111,3 +116,7 @@ if __name__ == '__main__':
 
     
     navigate2(2,2)
+
+            
+        
+    
