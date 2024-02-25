@@ -1,19 +1,13 @@
-from src import camera as camera_module
-import time
+import cv2
 
-if __name__ == '__main__':
+cam = cv2.VideoCapture(0)
 
-    total_seconds = 60
-    sample_hz = 10
-
-    camera = camera_module.Camera({
-        "show_preview": False
-    })
-    start_time = time.time()
-
-    while time.time() - start_time < total_seconds:
-        camera.capture()
-        print(camera.image_array)
-
-        time.sleep(max(0, 1/sample_hz -
-                       (time.time() - start_time)))
+while True:
+    ret, image = cam.read()
+    cv2.imshow('Imagetest',image)
+    k = cv2.waitKey(1)
+    if k != -1:
+        break
+cv2.imwrite('/home/pi/testimage.jpg', image)
+cam.release()
+cv2.destroyAllWindows()
