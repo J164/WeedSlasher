@@ -46,43 +46,70 @@ if __name__ == '__main__':
     drive_speed = 3
     def turn90right():
         vehicle.pivot_right(3)
-        time.sleep(0.61)
+        time.sleep(0.47)
         vehicle.stop()
         time.sleep(0.5)
         vehicle.stop()
         
     def turn90left():
         vehicle.pivot_left(3)
-        time.sleep(0.61)
+        time.sleep(0.48)
         vehicle.stop()
         time.sleep(0.5)
         vehicle.stop()
         
+        #Drives forwards and detects
     def forwardN(tiles):
         for i in range (tiles*12):
             vehicle.drive_forward(3)
             time.sleep(0.1)
             distance = distance_sensor1.distance
             print (distance)
-            if (distance <= 0.23):
+
+            #Checks distance sensor and checks if weed if object is close
+
+            if (distance <= 0.25):
                 vehicle.stop()
-                #model.classify('build/model')
+                classify = model.classify('build/model')
+                
+                print(classify)
+                if(classify):
+                    cut()
+                else:
+                    swerve()
                 return True
+
+
         vehicle.stop()
         time.sleep(0.5)
         vehicle.stop()
         return False
-        
 
+    #drives forward but does not detect
+    def forward1():
+        vehicle.drive_forward(3)
+        time.sleep(2.3)
+        vehicle.stop()
+        time.sleep(0.5)
 
-    test = np.array([[1,0,0,0,0],
-                     [1,0,0,0,0],
-                     [1,0,0,0,0]
+    def forward2():
+        vehicle.drive_forward(3)
+        time.sleep(1.3)
+        vehicle.stop()
+        time.sleep(0.7)
 
-    ])
+    def cut():
+        forward1()
 
     def swerve():
         turn90right()
+        forward2()
+        turn90left()
+        forward1()
+        turn90left()
+        forward2()
+        turn90right()
+        
         
 
     def navigate(array):
@@ -117,4 +144,11 @@ if __name__ == '__main__':
                 turn90left()
 
     
-    navigate2(2,2)
+    test = np.array([[1,0,0,0,0],
+                     [1,0,0,0,0],
+                     [1,0,0,0,0]
+
+    ])
+
+    navigate2(1,4)
+    forwardN(2)
