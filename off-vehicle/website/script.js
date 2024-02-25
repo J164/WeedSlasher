@@ -84,9 +84,31 @@ var selectedRegions = [];
             
             var saveButton = document.getElementById('saveButton');
             var finishButton = document.getElementById('finishButton');
+            var undoSaveButton = document.getElementById('undoSaveButton');
             saveButton.style.display = 'block';
+            undoSaveButton.style.display = 'block';
+            undoSaveButton.style.cursor = 'default';
             finishButton.style.display = 'block';
             
+        }
+        function undoSave() {
+            if (selectedRegions.length > 0) {
+                selectedRegions.pop();
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.strokeStyle = 'black';
+                selectedRegions.forEach(function (region) {
+                ctx.strokeRect(region.startX, region.startY, region.endX - region.startX, region.endY - region.startY);
+                
+            });
+
+            } else {
+                alert('Can\'t undo');
+                return;
+            }
+            if (selectedRegions.length == 0) {
+                undoSaveButton.style.opacity = '70%';
+                undoSaveButton.style.cursor = 'default';
+            }
         }
         // function saveInfo() {
         //     var info = document.getElementById('infoInput').value;
@@ -126,6 +148,16 @@ var selectedRegions = [];
                 endX: endCoords.x,
                 endY: endCoords.y
             });
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw all selected regions
+            ctx.strokeStyle = 'black';
+            selectedRegions.forEach(function (region) {
+                ctx.strokeRect(region.startX, region.startY, region.endX - region.startX, region.endY - region.startY);
+            });
+            var undoSaveButton = document.getElementById('undoSaveButton');
+            undoSaveButton.style.opacity = '100%';
+            undoSaveButton.style.cursor = 'pointer';
         }   
 
         function handleMouseUp() {
@@ -178,8 +210,10 @@ var selectedRegions = [];
             .catch(error => {
                 console.error('Error:', error);
             })
-
-            location.reload();
+            if (selectedRegions.length > 0) {
+                location.reload();
+            }
+            
             
         }
         // document.addEventListener('DOMContentLoaded', function () {

@@ -76,8 +76,14 @@ body {
     box-shadow: 0 0 20px 5px cornflowerblue;
     color:cornflowerblue;
 }
+
 #saveButton {
     display: none;
+}
+#undoSaveButton {
+    display: none;
+    cursor: default;
+    opacity: 70%;
 }
 #finishButton {
     display: none;
@@ -126,6 +132,9 @@ button {
     margin-top: 10px; /* Adjust the margin as needed */
 }
 
-button:hover {
+#saveButton:hover {
+    background-color: #45a049;
+}
+#finishButton:hover {
     background-color: #45a049;
 }
