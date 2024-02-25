@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Selection</title>
+    <style>
+        #canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Image Selection</h1>
+    <canvas id="canvas" width="500" height="300"></canvas>
+
+    <script>
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        var isDrawing = false;
+        var startCoords, endCoords;
+
+        canvas.addEventListener('mousedown', handleMouseDown);
+        canvas.addEventListener('mousemove', handleMouseMove);
+        canvas.addEventListener('mouseup', handleMouseUp);
+
+        function handleMouseDown(e) {
+            isDrawing = true;
+            startCoords = getMouseCoordinates(e);
+        }
+
+        function handleMouseMove(e) {
+            if (!isDrawing) return;
+
+            endCoords = getMouseCoordinates(e);
+
+            // Clear the canvas and draw a rectangle
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.strokeRect(startCoords.x, startCoords.y, endCoords.x - startCoords.x, endCoords.y - startCoords.y);
+        }
+
+        function handleMouseUp() {
+            isDrawing = false;
+
+            // Log or store the coordinates as needed
+            console.log('Start Coordinates:', startCoords);
+            console.log('End Coordinates:', endCoords);
+        }
+
+        function getMouseCoordinates(event) {
+            var rect = canvas.getBoundingClientRect();
+            return {
+                x: event.clientX - rect.left,
+                y: event.clientY - rect.top
+            };
+        }
+    </script>
+</body>
+</html>

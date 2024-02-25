@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Number Input with Dynamic Canvas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Real Number Input with Dynamic Canvas</h1>
+
+    <label for="realNumberInput">Enter a real number:</label>
+    <input type="text" id="realNumberInput" placeholder="Type here..." pattern="-?\d+(\.\d+)?" title="Please enter a valid real number">
+    <button onclick="displayRealNumber()">Submit</button>
+
+    <div id="displayRealNumber"></div>
+
+    <script>
+        function displayRealNumber() {
+            // Get user input value
+            var realNumberInput = document.getElementById('realNumberInput').value;
+
+            // Validate input using regex
+            var regex = /^-?\d+(\.\d+)?$/;
+            if (!regex.test(realNumberInput)) {
+                alert('Please enter a valid real number.');
+                return;
+            }
+
+            // Display user input
+            var displayElement = document.getElementById('displayRealNumber');
+            displayElement.innerHTML = '<p>Real Number Input: ' + realNumberInput + '</p>';
+
+            // Create a canvas element
+            var canvas = document.createElement('canvas');
+            canvas.width = 300;
+            canvas.height = 100;
+            canvas.style.border = '1px solid #000';
+
+            // Append the canvas to the body
+            document.body.appendChild(canvas);
+
+            // Draw real number on the dynamically created canvas
+            drawOnCanvas(canvas, realNumberInput);
+        }
+
+        function drawOnCanvas(canvas, number) {
+            var ctx = canvas.getContext('2d');
+
+            // Clear previous drawings
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw the real number on the canvas
+            ctx.font = '20px Arial';
+            ctx.fillText('Real Number: ' + number, 10, 30);
+        }
+    </script>
+</body>
+</html>
+

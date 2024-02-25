@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Number Input</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Real Number Input</h1>
+
+    <label for="inputHeight">Enter a height(ft):</label>
+    <input type="text" id="inputHeight" placeholder="Type here..." pattern="-?\d+(\.\d+)?" title="Please enter a valid height">
+    <label for="inputWidth">Enter a width(ft):</label>
+    <input type="text" id="inputWidth" placeholder="Type here..." pattern="-?\d+(\.\d+)?" title="Please enter a valid width">
+    <button onclick="displayRealNumber()">Submit</button>
+
+    <div id="displayRealNumber"></div>
+
+    <script>
+        function displayRealNumber() {
+            // Get user input value
+            var inputHeight = document.getElementById('inputHeight').value;
+            var inputWidth = document.getElementById('inputWidth').value;
+
+            // Validate input using regex
+            var regex = /^-?\d+(\.\d+)?$/;
+            if (!regex.test(inputHeight)) {
+                alert('Please enter a valid height.');
+                return;
+            }
+            if (!regex.test(inputWidth)) {
+                alert('Please enter a valid width.');
+                return;
+            }
+
+            // Display user input
+            var displayElement = document.getElementById('displayRealNumber');
+            displayElement.innerHTML = '<p>Dimension: ' + inputHeight + ' x ' + inputWidth + '</p>';
+        }
+    </script>
+</body>
+</html>

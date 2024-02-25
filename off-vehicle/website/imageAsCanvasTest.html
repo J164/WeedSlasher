@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image as Canvas</title>
+</head>
+<body>
+    <h1>Image as Canvas</h1>
+    <canvas id="canvas" minWidth="300" maxWidth="70%" height="auto" style="border: 1px solid #000;"></canvas>
+
+    <script>
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+
+        var img = new Image();
+        img.src = 'https://www.bhg.com/thmb/nqV3F-EMrgzLiz3e7fjh3bJxcxE=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/crabgrass-lawn-patch-f8a1886e-fca09c5ac54246879a3bd21f14ccd6ef.jpg'; // Replace with the path to your image
+
+        img.onload = function() {
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        };
+        var isDrawing = false;
+        var startCoords, endCoords;
+
+        canvas.addEventListener('mousedown', handleMouseDown);
+        canvas.addEventListener('mousemove', handleMouseMove);
+        canvas.addEventListener('mouseup', handleMouseUp);
+
+        function handleMouseDown(e) {
+            isDrawing = true;
+            startCoords = getMouseCoordinates(e);
+        }
+
+        function handleMouseMove(e) {
+            if (!isDrawing) return;
+
+            endCoords = getMouseCoordinates(e);
+
+            // Clear the canvas and draw a rectangle
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            img.onload = function() {
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            };
+            ctx.strokeRect(startCoords.x, startCoords.y, endCoords.x - startCoords.x, endCoords.y - startCoords.y);
+        }
+
+        function handleMouseUp() {
+            isDrawing = false;
+
+            // Log or store the coordinates as needed
+            console.log('Start Coordinates:', startCoords);
+            console.log('End Coordinates:', endCoords);
+        }
+
+        function getMouseCoordinates(event) {
+            var rect = canvas.getBoundingClientRect();
+            return {
+                x: event.clientX - rect.left,
+                y: event.clientY - rect.top
+            };
+        }
+    </script>
+</body>
+</html>

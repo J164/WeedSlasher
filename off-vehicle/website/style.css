@@ -1,0 +1,131 @@
+/* body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 50px;
+}
+#preview {
+    max-width: 100%;
+    max-height: 300px;
+    margin-top: 20px;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+}
+
+#display {
+    max-width: 70%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#fileInput {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+canvas {
+    border: 1px solid #000;
+}
+#displayInfoButton {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 21px;
+} */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 50px;
+    background-color:burlywood; /* Background color for the body */
+    background-image: url(https://jooinn.com/images/green-grass-70.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#preview {
+    max-width: 100%;
+    max-height: 300px;
+    margin-top: 20px;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 600px; /* Adjust the maximum width as needed */
+    margin: 0 auto;
+    background-color: #fff; /* Background color for the main container */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px 5px cornflowerblue;
+    color:cornflowerblue;
+}
+#saveButton {
+    display: none;
+}
+#finishButton {
+    display: none;
+}
+#display {
+    max-width: 70%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #eee; /* Background color for the display container */
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+#fileInput {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+
+canvas {
+    border: 1px solid #000;
+}
+
+#displayInfoButton {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px; /* Adjust the width as needed */
+    padding: 10px; /* Adjust the padding as needed */
+    background-color: #4CAF50; /* Button background color */
+    color: #fff; /* Button text color */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px; /* Adjust the margin as needed */
+}
+
+button:hover {
+    background-color: #45a049;
+}

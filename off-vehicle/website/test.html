@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Graph with Axes and Labels</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Canvas Graph with Axes and Labels</h1>
+
+    <canvas id="graphCanvas" width="400" height="300"></canvas>
+
+    <script>
+        var canvas = document.getElementById('graphCanvas');
+        var ctx = canvas.getContext('2d');
+
+        // Sample data points
+        var dataPoints = [
+            { x: 50, y: 250 },
+            { x: 100, y: 200 },
+            { x: 150, y: 150 },
+            { x: 200, y: 100 },
+            { x: 250, y: 50 }
+
+            

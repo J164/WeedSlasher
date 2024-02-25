@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <title>Upload your file</title>
+</head>
+<body>
+    <div class="main" id="main">
+        <h1>Weed Slasher</h1>
+    
+        <input type="file" id="fileInput" onchange="displayFile()">
+    
+        <div id="display"></div>
+
+        <label for="inputHeight">Enter a height(ft):</label>
+        <input type="text" id="inputHeight" placeholder="Type here..." pattern="-?\d+(\.\d+)?" title="Please enter a valid height">
+        <br>
+        <label for="inputWidth">Enter a width(ft):</label>
+        <input type="text" id="inputWidth" placeholder="Type here..." pattern="-?\d+(\.\d+)?" title="Please enter a valid width">
+        <br>
+        <button onclick="displayRealNumber()">Submit</button>
+
+        <div id="displayRealNumber"></div>
+        
+
+        <button id="saveButton" onclick="displayRegion()">Save</button>
+        <button id = "finishButton" onclick="sendData()">Finish</button>
+    </div>
+</body>
+</html>
