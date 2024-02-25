@@ -3,7 +3,8 @@ from src import distance_sensor as distance_sensor_module
 from typing import List
 import time
 import numpy as np
-import script from test
+import detection.script as model
+
 isStopped = False
 
 distance_sensor1 = distance_sensor_module.DistanceSensor({
@@ -65,6 +66,7 @@ if __name__ == '__main__':
             print (distance)
             if (distance <= 0.23):
                 vehicle.stop()
+                #model.classify('build/model')
                 return True
         vehicle.stop()
         time.sleep(0.5)
@@ -116,7 +118,3 @@ if __name__ == '__main__':
 
     
     navigate2(2,2)
-
-            
-        
-    

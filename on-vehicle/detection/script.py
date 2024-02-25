@@ -10,6 +10,4 @@ def classify(model_path):
   image = cv2.resize(image,dsize=(256,256),interpolation=cv2.INTER_CUBIC)
   image_data = np.asarray(image)
   image_data = np.expand_dims(image_data, axis=0)
-  return model.serve(image_data)[0,0] < 0.5
-
-print(classify('off-vehicle/build/model'))
+  return (model.serve(image_data)[0,0] < 0.5).numpy()
